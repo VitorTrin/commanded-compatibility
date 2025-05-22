@@ -21,7 +21,7 @@ defmodule Commanded.Event.ErrorHandler do
     context = Map.update(context, :failures, 1, &(&1 + 1))
     failures = Map.fetch!(context, :failures)
 
-    base_delay = failures ** 2 * 1000
+    base_delay = Integer.pow(failures, 2) * 1000
     delay = base_delay + jitter_fn.()
     delay = max(delay, :timer.seconds(1))
     delay = min(delay, :timer.hours(24))
